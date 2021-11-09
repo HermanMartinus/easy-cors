@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn licenselarry.wsgi --log-file -
+web: gunicorn ez-cors.wsgi --log-file -

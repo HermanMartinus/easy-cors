@@ -16,6 +16,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', False)
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
 
 ADMINS = (('Webmaster', os.getenv('ADMIN_EMAIL')),)
 
@@ -29,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'proxy',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [

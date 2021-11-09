@@ -3,6 +3,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http.response import Http404, HttpResponse
 
 import requests
+from djproxy.views import HttpProxy
+
+class LocalProxy(HttpProxy):
+    base_url = 'https://example.com/'
+    proxy_middleware = [
+        'proxy.middleware.AddCORSHeaders',
+    ]
 
 
 @csrf_exempt
@@ -13,10 +20,10 @@ def reverse_proxy(request, url):
     
     response = HttpResponse(proxied_response.content, content_type=proxied_response.headers.get('content-type'))
     for header_key, header_value in proxied_response.headers.items():
-        if header_key not in 'ConnectionKeep-AliveProxy-AuthenticateProxy-AuthorizationTETrailersTransfer-EncodingUpgrade':
-            response.headers[header_key] = header_value
+        response.headers[header_key] = header_value
     
     response.headers["Access-Control-Allow-Origin"] = '*'
     response.headers["Vary"] = "Origin"
+    response.headers["Accept-Encoding"] = "gzip, deflate, br"
 
     return response

@@ -13,8 +13,9 @@ def reverse_proxy(request, url):
     
     response = HttpResponse(proxied_response.content, content_type=proxied_response.headers.get('content-type'))
     for header_key, header_value in proxied_response.headers.items():
-        response[header_key] = header_value
+        response.headers[header_key] = header_value
     
     response.headers["Access-Control-Allow-Origin"] = '*'
     response.headers["Vary"] = "Origin"
+
     return response

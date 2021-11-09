@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn easy-cors.wsgi --log-file -
+web: gunicorn easycors.wsgi --log-file -
